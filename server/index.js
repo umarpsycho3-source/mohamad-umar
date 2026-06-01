@@ -116,7 +116,7 @@ app.put('/api/collections/:collection', async (req, res) => {
 
 app.use(express.static(distDir, { extensions: ['html'] }));
 
-app.use((_req, res) => {
+app.get('*', (req, res) => {
   const indexPath = path.join(distDir, 'index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);

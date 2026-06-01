@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { getServices, saveLead } from '../data/storage';
 
@@ -12,7 +12,14 @@ export function FiverrIcon({ className = "w-5 h-5" }) {
 }
 
 export default function Services() {
-  const [servicesList] = useState(() => getServices());
+  const [servicesList, setServicesList] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getServices();
+      setServicesList(data);
+    })();
+  }, []);
 
   const handleOrderClick = (serviceTitle) => {
     saveLead({

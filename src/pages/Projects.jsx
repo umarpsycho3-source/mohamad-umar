@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ProjectCard from "../components/ProjectCard";
 import { getProjects } from "../data/storage";
 
 export default function Projects() {
-  const [projectList] = useState(() => getProjects());
+  const [projectList, setProjectList] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getProjects();
+      setProjectList(data);
+    })();
+  }, []);
+
 
   return (
     <section className="min-h-screen py-10 sm:py-12 px-3 sm:px-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
