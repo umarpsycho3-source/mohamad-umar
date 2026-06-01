@@ -8,7 +8,7 @@ export const projects = [
     completionDate: "2025-09-15",
     liveDemo: "https://example.com/pos-demo",
     github: "https://github.com/umarpsycho3-source/pos-management",
-    image: "/projects/pos.png",
+    image: "/projects/pos.svg",
     video: "/projects/pos-demo.mp4",
     caseStudy: "A detailed case study describing architecture and challenges."
   },
@@ -21,7 +21,7 @@ export const projects = [
     completionDate: "2026-05-30",
     liveDemo: "https://umar-portfolio.com",
     github: "https://github.com/umarpsycho3-source/portfolio",
-    image: "/projects/portfolio.png",
+    image: "/projects/portfolio.svg",
     video: "/projects/portfolio-demo.mp4",
     caseStudy: "Showcases design decisions and 3D background implementation."
   }

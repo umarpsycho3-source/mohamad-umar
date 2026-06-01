@@ -70,8 +70,8 @@ export default function Services() {
             No services configured at the moment.
           </div>
         ) : (
-          <motion.div
-            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
+          <motion.div 
+            className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             animate="visible"

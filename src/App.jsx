@@ -80,9 +80,9 @@ function NavEntry({ to, label, isSpecial, mobile = false, onClick }) {
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans overflow-x-hidden">
         <Navbar />
-        <main className="pt-24 md:pt-20 flex-grow">
+        <main className="pt-24 md:pt-20 flex-grow overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

@@ -131,6 +131,14 @@ const writeJSON = (key, value) => {
 const normalizeProject = (project, fallbackId = null, fallbackCreatedAt = null) => ({
   ...project,
   id: Number(project.id ?? fallbackId),
+  image:
+    project.image === '/projects/pos.png'
+      ? '/projects/pos.svg'
+      : project.image === '/projects/portfolio.png'
+        ? '/projects/portfolio.svg'
+        : project.image === '/projects/restaurant.png'
+          ? '/projects/aurora.svg'
+          : project.image,
   technologies: Array.isArray(project.technologies)
     ? project.technologies
     : String(project.technologies || '')

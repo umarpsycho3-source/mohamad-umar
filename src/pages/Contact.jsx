@@ -95,7 +95,7 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-5 items-stretch">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-5 items-stretch">
 
           {/* Contact Details Column */}
           <motion.div

@@ -68,7 +68,7 @@ export default function About() {
         </motion.div>
 
         <motion.div
-          className="grid gap-12 md:grid-cols-12 items-start"
+          className="grid grid-cols-1 gap-12 md:grid-cols-12 items-start"
           variants={containerVariants}
           initial="hidden"
           animate="visible"

@@ -93,7 +93,7 @@ export default function Dashboard() {
       completionDate: new Date().toISOString().split('T')[0],
       liveDemo: '',
       github: '',
-      image: '/projects/portfolio.png',
+      image: '/projects/portfolio.svg',
       video: '',
       caseStudy: ''
     });
@@ -253,7 +253,7 @@ export default function Dashboard() {
         </div>
 
         {/* Dashboard Tabs Grid */}
-        <div className="grid gap-8 md:grid-cols-4 items-start">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 items-start">
           
           {/* Left Panel Sidebar */}
           <div className="md:col-span-1 space-y-4">
@@ -310,7 +310,7 @@ export default function Dashboard() {
                   transition={{ duration: 0.3 }}
                   className="space-y-6"
                 >
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="p-6 rounded-2xl glass-panel flex justify-between items-center relative overflow-hidden">
                       <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl"></div>
                       <div>
@@ -341,7 +341,7 @@ export default function Dashboard() {
                   {/* SVG Charts Area */}
                   <div className="p-6 rounded-2xl glass-panel">
                     <h3 className="text-lg font-bold mb-6">Portfolio Distribution & Activity</h3>
-                    <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       {/* SVG Category Bar Chart */}
                       <div className="flex flex-col justify-between">
                         <h4 className="text-sm text-gray-400 mb-4">Project Breakdown</h4>
@@ -587,7 +587,7 @@ export default function Dashboard() {
               </div>
 
               <form onSubmit={handleProjectSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <label className="block text-xs font-semibold text-gray-400 mb-1">Project Title</label>
                     <input
@@ -640,7 +640,7 @@ export default function Dashboard() {
                   {formErrors.technologies && <p className="text-red-400 text-xs mt-0.5">{formErrors.technologies}</p>}
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <label className="block text-xs font-semibold text-gray-400 mb-1">Live Demo URL</label>
                     <input
@@ -664,7 +664,7 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <label className="block text-xs font-semibold text-gray-400 mb-1">Preview Image URL/Path</label>
                     <input
@@ -672,7 +672,7 @@ export default function Dashboard() {
                       value={projectForm.image}
                       onChange={e => setProjectForm({...projectForm, image: e.target.value})}
                       className="w-full px-3 py-2 rounded-lg glass-input text-sm"
-                      placeholder="/projects/pos.png"
+                      placeholder="/projects/pos.svg"
                     />
                     {formErrors.image && <p className="text-red-400 text-xs mt-0.5">{formErrors.image}</p>}
                   </div>

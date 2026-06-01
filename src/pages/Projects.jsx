@@ -26,7 +26,7 @@ export default function Projects() {
           No projects found. Check back later or add some in the Admin Dashboard!
         </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
           {projectList.map((p) => (
             <ProjectCard key={p.id} project={p} />
           ))}

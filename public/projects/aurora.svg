@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fb7185"/>
+      <stop offset="55%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="48" fill="url(#g3)"/>
+  <rect x="110" y="130" width="980" height="540" rx="42" fill="rgba(15,23,42,0.7)"/>
+  <circle cx="285" cy="320" r="120" fill="rgba(255,255,255,0.14)"/>
+  <circle cx="905" cy="310" r="150" fill="rgba(255,255,255,0.12)"/>
+  <path d="M180 520 C320 430, 410 620, 560 520 S860 420, 1020 520" stroke="#ffffff" stroke-width="18" fill="none" opacity="0.7"/>
+  <text x="600" y="690" text-anchor="middle" font-family="Arial, sans-serif" font-size="54" font-weight="700" fill="#ffffff">Aurora Table Restaurant</text>
+</svg>
