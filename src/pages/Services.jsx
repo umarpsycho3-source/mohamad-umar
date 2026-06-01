@@ -6,7 +6,7 @@ import { getServices, saveLead } from '../data/storage';
 export function FiverrIcon({ className = "w-5 h-5" }) {
   return (
     <svg className={`${className} fill-current`} viewBox="0 0 24 24">
-      <path d="M23 0H1a1 1 0 00-1 1v22a1 1 0 001 1h22a1 1 0 001-1V1a1 1 0 00-1-1zm-6.8 17.2h-2.3v-4.8c0-1.2-.9-1.2-1.2-1.2s-1.2 0-1.2 1.2v4.8H9.2V9.8h2.3v1c.5-.7 1.3-1.2 2.3-1.2 1.8 0 2.4 1.3 2.4 3v4.6zm-8.7 0H5.2V9.8h2.3v7.4zM6.4 8.2c-.7 0-1.3-.6-1.3-1.3S5.7 5.6 6.4 5.6s1.3.6 1.3 1.3c0 .8-.6 1.3-1.3 1.3zm12.3 0c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3 1.3.6 1.3 1.3-.6 1.3-1.3 1.3z"/>
+      <path d="M23 0H1a1 1 0 00-1 1v22a1 1 0 001 1h22a1 1 0 001-1V1a1 1 0 00-1-1zm-6.8 17.2h-2.3v-4.8c0-1.2-.9-1.2-1.2-1.2s-1.2 0-1.2 1.2v4.8H9.2V9.8h2.3v1c.5-.7 1.3-1.2 2.3-1.2 1.8 0 2.4 1.3 2.4 3v4.6zm-8.7 0H5.2V9.8h2.3v7.4zM6.4 8.2c-.7 0-1.3-.6-1.3-1.3S5.7 5.6 6.4 5.6s1.3.6 1.3 1.3c0 .8-.6 1.3-1.3 1.3zm12.3 0c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3 1.3.6 1.3 1.3-.6 1.3-1.3 1.3z" />
     </svg>
   );
 }
@@ -33,10 +33,10 @@ export default function Services() {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.6, ease: "easeOut" } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
     }
   };
 
@@ -47,7 +47,7 @@ export default function Services() {
       <div className="absolute bottom-1/4 right-1/3 translate-x-1/2 w-96 h-96 bg-purple-600/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ export default function Services() {
             No services configured at the moment.
           </div>
         ) : (
-          <motion.div 
+          <motion.div
             className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
             variants={containerVariants}
             initial="hidden"
@@ -111,7 +111,7 @@ export default function Services() {
                     {service.features.map((feat, fIdx) => (
                       <li key={fIdx} className="flex items-start gap-2.5">
                         <svg className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
                         </svg>
                         {feat}
                       </li>
@@ -121,7 +121,7 @@ export default function Services() {
 
                 {/* Fiverr CTA Link Button */}
                 <a
-                  href={service.fiverrLink || "https://fiverr.com"}
+                  href={service.fiverrLink || "https://www.fiverr.com/s/387W8VL"}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => handleOrderClick(service.title)}
@@ -135,9 +135,9 @@ export default function Services() {
             ))}
           </motion.div>
         )}
-        
+
         {/* Fiverr General Consultation CTA Panel */}
-        <motion.div 
+        <motion.div
           className="mt-16 p-8 rounded-3xl glass-panel text-center max-w-3xl mx-auto relative overflow-hidden group border border-emerald-500/10 hover:border-emerald-500/25 transition duration-500"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -145,13 +145,13 @@ export default function Services() {
         >
           <div className="absolute -top-12 -left-12 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl pointer-events-none"></div>
-          
+
           <h3 className="text-xl sm:text-2xl font-bold mb-3">Looking for a Customized Tech Solution?</h3>
           <p className="text-xs sm:text-sm text-gray-400 mb-6 max-w-xl mx-auto leading-relaxed">
             Need custom features, custom databases, or specialized system flows? Send me a custom inquiry and I will build a tailored solution specifically for your business workflow.
           </p>
           <a
-            href="https://fiverr.com"
+            href="https://www.fiverr.com/s/387W8VL?source=services_tab"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => handleOrderClick('Custom Consultation')}
@@ -159,7 +159,7 @@ export default function Services() {
           >
             Request Custom Quote
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </a>
         </motion.div>
