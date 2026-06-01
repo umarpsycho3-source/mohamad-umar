@@ -1,5 +1,7 @@
 import { projects as defaultProjects } from './projects';
 
+export const FIVERR_PROFILE_URL = 'https://www.fiverr.com/s/387W8VL';
+
 const PROJECTS_KEY = 'umar_portfolio_projects';
 const MESSAGES_KEY = 'umar_portfolio_messages';
 const SERVICES_KEY = 'umar_portfolio_services';
@@ -14,7 +16,7 @@ const defaultServices = [
     price: '$99',
     deliveryTime: '3-5 Days',
     features: ['Responsive Layouts', 'Modern Animations', 'SEO Friendly Structure', 'Source Code Included'],
-    fiverrLink: 'https://fiverr.com'
+    fiverrLink: FIVERR_PROFILE_URL
   },
   {
     id: 2,
@@ -23,7 +25,7 @@ const defaultServices = [
     price: '$249',
     deliveryTime: '7-10 Days',
     features: ['Database Architecture', 'REST API Development', 'Secure Session Authentication', 'Dynamic Frontend UI'],
-    fiverrLink: 'https://fiverr.com'
+    fiverrLink: FIVERR_PROFILE_URL
   },
   {
     id: 3,
@@ -32,7 +34,7 @@ const defaultServices = [
     price: '$299',
     deliveryTime: '10-14 Days',
     features: ['Custom Dashboard Analytics', 'Inventory Tracking', 'Advanced CRUD Operations', 'Secure Roles & Auth'],
-    fiverrLink: 'https://fiverr.com'
+    fiverrLink: FIVERR_PROFILE_URL
   },
   {
     id: 4,
@@ -41,7 +43,7 @@ const defaultServices = [
     price: '$29',
     deliveryTime: '1-2 Days',
     features: ['Modern Visual Aesthetics', 'High Resolution Output', 'Unlimited Revisions', 'Source Files Provided'],
-    fiverrLink: 'https://fiverr.com'
+    fiverrLink: FIVERR_PROFILE_URL
   },
   {
     id: 5,
@@ -50,7 +52,7 @@ const defaultServices = [
     price: '$79',
     deliveryTime: '3-4 Days',
     features: ['Modern Glassmorphism UI', 'Dynamic Content Management', 'Deployable Codebase', 'Mobile Responsiveness'],
-    fiverrLink: 'https://fiverr.com'
+    fiverrLink: FIVERR_PROFILE_URL
   }
 ];
 
@@ -241,7 +243,15 @@ export const deleteMessage = (id) => {
 export const getServices = () => {
   const stored = readJSON(SERVICES_KEY, null);
   if (!stored) return writeJSON(SERVICES_KEY, defaultServices);
-  return stored;
+
+  const normalized = stored.map((service) => ({
+    ...service,
+    fiverrLink: FIVERR_PROFILE_URL
+  }));
+
+  const needsRepair = JSON.stringify(stored) !== JSON.stringify(normalized);
+  if (needsRepair) writeJSON(SERVICES_KEY, normalized);
+  return normalized;
 };
 
 export const saveService = (service) => {

@@ -172,7 +172,7 @@ function Home() {
             </Link>
 
             <a
-              href="https://fiverr.com"
+              href="https://www.fiverr.com/s/387W8VL"
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleFiverrClick}
