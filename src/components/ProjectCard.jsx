@@ -17,7 +17,7 @@ export default function ProjectCard({ project }) {
   return (
     <motion.div
       data-project-id={project.id}
-      className="relative p-4 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 hover:shadow-xl transition-shadow"
+      className="relative p-3 sm:p-4 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 hover:shadow-xl transition-shadow"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleLeave}
       whileHover={{ scale: 1.02 }}
@@ -26,27 +26,27 @@ export default function ProjectCard({ project }) {
       <img
         src={project.image}
         alt={project.name}
-        className="w-full h-48 object-cover rounded-md mb-4"
+        className="w-full h-40 sm:h-48 object-cover rounded-md mb-4"
       />
-      <h3 className="text-xl font-semibold text-white mb-2">{project.name}</h3>
-      <p className="text-sm text-gray-300 mb-3">{project.shortDescription}</p>
+      <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 leading-tight">{project.name}</h3>
+      <p className="text-sm text-gray-300 mb-3 leading-relaxed">{project.shortDescription}</p>
       <div className="flex flex-wrap gap-2 mb-3">
         {project.technologies.map((tech) => (
           <span
             key={tech}
-            className="px-2 py-1 text-xs bg-white/20 rounded text-white"
+            className="px-2 py-1 text-[11px] sm:text-xs bg-white/20 rounded text-white"
           >
             {tech}
           </span>
         ))}
       </div>
-      <div className="flex space-x-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         {project.liveDemo && (
           <a
             href={project.liveDemo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 text-center px-3 py-1 bg-primary/20 hover:bg-primary/30 rounded transition"
+            className="flex-1 text-center px-3 py-2 bg-primary/20 hover:bg-primary/30 rounded transition text-sm"
           >
             Live Demo
           </a>
@@ -56,7 +56,7 @@ export default function ProjectCard({ project }) {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 text-center px-3 py-1 bg-accent/20 hover:bg-accent/30 rounded transition"
+            className="flex-1 text-center px-3 py-2 bg-accent/20 hover:bg-accent/30 rounded transition text-sm"
           >
             GitHub
           </a>

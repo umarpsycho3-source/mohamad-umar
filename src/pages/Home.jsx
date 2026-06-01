@@ -70,7 +70,7 @@ function Home() {
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-pink-600/10 blur-[130px] animate-pulse-glow z-0"></div>
 
       <div className="relative max-w-6xl mx-auto grid gap-12 md:grid-cols-12 items-center z-10 w-full">
-        <div className="md:col-span-7 space-y-6 text-left">
+        <div className="md:col-span-7 space-y-6 text-center md:text-left">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -80,7 +80,7 @@ function Home() {
             BEng (Hons) Software Engineering Undergraduate
           </motion.div>
 
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-none text-white">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none text-white">
             Hi, I&apos;m{' '}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-red-400">
               Umar
@@ -140,7 +140,7 @@ function Home() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4 pt-4">
+          <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
             <Link
               to="/projects"
               className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-sm font-bold rounded-xl shadow-lg hover:shadow-purple-500/25 transition duration-300 transform hover:-translate-y-0.5"
