@@ -116,13 +116,13 @@ app.put('/api/collections/:collection', async (req, res) => {
 
 app.use(express.static(distDir, { extensions: ['html'] }));
 
-app.get('*', (_req, res) => {
+app.use((_req, res) => {
   const indexPath = path.join(distDir, 'index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
-    return;
+  } else {
+    res.status(404).send('Build output not found.');
   }
-  res.status(404).send('Build output not found.');
 });
 
 ensureDatabase()
