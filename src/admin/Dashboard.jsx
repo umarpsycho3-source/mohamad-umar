@@ -13,8 +13,8 @@ export default function Dashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return sessionStorage.getItem('umar_admin_auth') === 'true';
   });
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [accessEmail, setAccessEmail] = useState('');
+  const [accessPassword, setAccessPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'projects', 'messages'
 
@@ -51,9 +51,9 @@ export default function Dashboard() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const emailMatch = loginEmail.trim().toLowerCase() === 'umarxgamer04@gmail.com';
-    const passwordMatch = loginPassword === 'UmarTaper1234';
-    const passcodeMatch = loginEmail.trim().toLowerCase() === 'admin' && loginPassword === 'admin123';
+    const emailMatch = accessEmail.trim().toLowerCase() === 'umarxgamer04@gmail.com';
+    const passwordMatch = accessPassword === 'UmarTaper1234';
+    const passcodeMatch = accessEmail.trim().toLowerCase() === 'admin' && accessPassword === 'admin123';
 
     if ((emailMatch && passwordMatch) || passcodeMatch) {
       setIsAuthenticated(true);
@@ -61,9 +61,9 @@ export default function Dashboard() {
       setLoginError('');
       loadAdminData();
     } else {
-      setLoginError('Invalid credentials. Use the admin Gmail and password you provided.');
-      setLoginEmail('');
-      setLoginPassword('');
+      setLoginError('Invalid credentials.');
+      setAccessEmail('');
+      setAccessPassword('');
     }
   };
 
@@ -169,35 +169,43 @@ export default function Dashboard() {
             <p className="text-gray-400 mt-2 text-sm">Please authorize to manage your portfolio</p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6" autoComplete="off">
             <div>
-              <label htmlFor="loginEmail" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
-                Admin Email
+              <label htmlFor="accessEmail" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
+                Access Email
               </label>
               <input
-                type="email"
-                id="loginEmail"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
+                type="text"
+                id="accessEmail"
+                name="access-email"
+                value={accessEmail}
+                onChange={(e) => setAccessEmail(e.target.value)}
                 className={`w-full px-4 py-3 rounded-lg glass-input text-white ${loginError ? 'border-red-500/50' : ''}`}
-                placeholder="umarxgamer04@gmail.com"
-                autoComplete="username"
+                placeholder="Enter access email"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck={false}
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="loginPassword" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
-                Admin Password
+              <label htmlFor="accessPassword" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
+                Access Password
               </label>
               <input
                 type="password"
-                id="loginPassword"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
+                id="accessPassword"
+                name="access-password"
+                value={accessPassword}
+                onChange={(e) => setAccessPassword(e.target.value)}
                 className={`w-full px-4 py-3 text-center tracking-widest text-lg font-bold rounded-lg glass-input text-white ${loginError ? 'border-red-500/50' : ''}`}
-                placeholder="UmarTaper1234"
-                autoComplete="current-password"
+                placeholder="Enter access password"
+                autoComplete="new-password"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck={false}
                 required
               />
               {loginError && (
@@ -218,10 +226,6 @@ export default function Dashboard() {
             >
               Sign In
             </button>
-
-            <p className="text-[11px] text-gray-500 text-center leading-relaxed">
-              Admin access uses the email and password you shared. The old passcode fallback still works if needed.
-            </p>
           </form>
         </motion.div>
       </div>
