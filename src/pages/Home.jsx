@@ -131,14 +131,14 @@ function Home() {
               </div>
             </div>
 
-          <div className="h-auto flex flex-wrap justify-center md:justify-start items-center gap-2">
-            <span className="text-sm font-semibold text-gray-500 uppercase tracking-widest">Delivering:</span>
-            <span className="text-base sm:text-lg font-bold text-pink-400 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-red-400">
-              {typedText}
-            </span>
-            <span className="w-1.5 h-5 bg-pink-400 animate-pulse rounded-full"></span>
+            <div className="h-auto flex flex-wrap justify-center md:justify-start items-center gap-2">
+              <span className="text-sm font-semibold text-gray-500 uppercase tracking-widest">Delivering:</span>
+              <span className="text-base sm:text-lg font-bold text-pink-400 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-red-400">
+                {typedText}
+              </span>
+              <span className="w-1.5 h-5 bg-pink-400 animate-pulse rounded-full"></span>
+            </div>
           </div>
-        </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap justify-center md:justify-start gap-3 pt-4">
             <Link
@@ -157,7 +157,7 @@ function Home() {
             </Link>
 
             <a
-              href="/resume.pdf"
+              href="/Umar CV Resume.pdf"
               download
               className="w-full lg:w-auto px-6 py-3 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-sm font-bold rounded-xl border border-white/15 hover:border-white/20 transition duration-300 transform hover:-translate-y-0.5 text-center"
             >
