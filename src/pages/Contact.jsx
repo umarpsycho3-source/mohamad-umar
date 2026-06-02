@@ -41,19 +41,23 @@ export default function Contact() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      saveMessage(formData);
+    try {
+      await saveMessage(formData);
       setIsSubmitting(false);
       setSubmitSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 1200);
+    } catch (error) {
+      console.error('Failed to send message', error);
+      setIsSubmitting(false);
+      setErrors({ message: 'Message could not be saved. Please try again.' });
+    }
   };
 
   // Logging WhatsApp CTA clicks in leads database

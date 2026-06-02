@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import process from 'process';
 import { fileURLToPath } from 'url';
 import { Pool } from 'pg';
 import { projects as defaultProjects } from '../src/data/projects.js';

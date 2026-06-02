@@ -9,7 +9,6 @@ const COLLECTION_KEYS = {
   leads: 'umar_portfolio_leads'
 };
 
-const REMOTE_COLLECTIONS = new Set(['projects', 'messages', 'services', 'education', 'leads']);
 const USE_REMOTE_API = import.meta.env.PROD;
 
 const hasWindow = () => typeof window !== 'undefined';
@@ -166,7 +165,7 @@ const saveCollectionLocal = (collection, items) => {
 };
 
 const loadCollectionRemote = async (collection) => {
-  let remoteList = [];
+  let remoteList;
   try {
     const remote = await apiFetch(`/collections/${collection}`);
     remoteList = Array.isArray(remote?.items) ? remote.items : [];
@@ -265,7 +264,7 @@ export const saveMessage = async (msg) => {
     type: 'Form Submission',
     clientName: msg.name,
     clientContact: msg.email,
-    details: `${msg.subject} — ${msg.message}`,
+    details: `${msg.subject} - ${msg.message}`,
     date: newMessage.date
   });
 

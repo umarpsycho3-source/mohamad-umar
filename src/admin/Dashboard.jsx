@@ -53,7 +53,7 @@ export default function Dashboard() {
   // Load data on mount if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      loadAdminData();
+      queueMicrotask(loadAdminData);
     }
   }, [isAuthenticated, loadAdminData]);
 
