@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   getProjects, 
@@ -18,9 +18,9 @@ export default function Dashboard() {
   const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'projects', 'messages'
 
-  // Admin Data State - loaded lazily on mount
-  const [projectsList, setProjectsList] = useState(() => getProjects());
-  const [messagesList, setMessagesList] = useState(() => getMessages());
+  // Admin Data State - loaded asynchronously
+  const [projectsList, setProjectsList] = useState([]);
+  const [messagesList, setMessagesList] = useState([]);
 
   // Modal Control
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
@@ -44,12 +44,20 @@ export default function Dashboard() {
   // Form errors
   const [formErrors, setFormErrors] = useState({});
 
-  const loadAdminData = () => {
-    setProjectsList(getProjects());
-    setMessagesList(getMessages());
-  };
+  const loadAdminData = useCallback(async () => {
+    const [projects, messages] = await Promise.all([getProjects(), getMessages()]);
+    setProjectsList(projects);
+    setMessagesList(messages);
+  }, []);
 
-  const handleLogin = (e) => {
+  // Load data on mount if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadAdminData();
+    }
+  }, [isAuthenticated, loadAdminData]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     const emailMatch = accessEmail.trim().toLowerCase() === 'umarxgamer04@gmail.com';
     const passwordMatch = accessPassword === 'UmarTaper1234';
@@ -59,7 +67,7 @@ export default function Dashboard() {
       setIsAuthenticated(true);
       sessionStorage.setItem('umar_admin_auth', 'true');
       setLoginError('');
-      loadAdminData();
+      await loadAdminData();
     } else {
       setLoginError('Invalid credentials.');
       setAccessEmail('');
@@ -73,9 +81,9 @@ export default function Dashboard() {
   };
 
   // Delete message
-  const handleDeleteMsg = (id) => {
+  const handleDeleteMsg = async (id) => {
     if (window.confirm('Are you sure you want to delete this message?')) {
-      const updated = deleteMessage(id);
+      const updated = await deleteMessage(id);
       setMessagesList(updated);
       if (activeMsg && activeMsg.id === id) setActiveMsg(null);
     }
@@ -113,7 +121,7 @@ export default function Dashboard() {
   };
 
   // Save/Update project form
-  const handleProjectSubmit = (e) => {
+  const handleProjectSubmit = async (e) => {
     e.preventDefault();
     
     // Simple Validation
@@ -134,14 +142,14 @@ export default function Dashboard() {
       technologies: projectForm.technologies.split(',').map(t => t.trim()).filter(Boolean)
     };
 
-    const updated = saveProject(payload);
+    const updated = await saveProject(payload);
     setProjectsList(updated);
     setIsProjectModalOpen(false);
   };
 
-  const handleDeleteProj = (id) => {
+  const handleDeleteProj = async (id) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
-      const updated = deleteProject(id);
+      const updated = await deleteProject(id);
       setProjectsList(updated);
     }
   };

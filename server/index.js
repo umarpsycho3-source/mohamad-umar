@@ -17,9 +17,9 @@ const useDatabase = Boolean(process.env.DATABASE_URL);
 
 const pool = useDatabase
   ? new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined
-    })
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined
+  })
   : null;
 
 const COLLECTIONS = new Set(['projects', 'messages', 'services', 'education', 'leads']);
@@ -73,6 +73,22 @@ app.get('/api/health', async (_req, res) => {
   });
 });
 
+// Simple status endpoint to help debugging deploys
+app.get('/api/status', async (_req, res) => {
+  try {
+    const dbOk = Boolean(pool);
+    let dbInfo = null;
+    if (pool) {
+      const result = await pool.query("SELECT to_char(max(updated_at), 'YYYY-MM-DD HH24:MI:SS') as last_update FROM portfolio_state");
+      dbInfo = { lastUpdate: result.rows[0]?.last_update || null };
+    }
+    res.json({ ok: true, database: dbOk, dbInfo });
+  } catch (err) {
+    console.warn('Status check failed', err);
+    res.status(500).json({ ok: false, error: String(err) });
+  }
+});
+
 app.get('/api/collections/:collection', async (req, res) => {
   const { collection } = req.params;
   if (!COLLECTIONS.has(collection)) {
@@ -116,10 +132,11 @@ app.put('/api/collections/:collection', async (req, res) => {
 
 app.use(express.static(distDir, { extensions: ['html'] }));
 
-app.get('*', (req, res) => {
+app.use((_req, res) => {
   const indexPath = path.join(distDir, 'index.html');
   if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
+    const html = fs.readFileSync(indexPath, 'utf8');
+    res.type('html').send(html);
   } else {
     res.status(404).send('Build output not found.');
   }

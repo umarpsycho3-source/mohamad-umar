@@ -63,9 +63,9 @@ const normalizeProject = (project, fallbackId = null) => ({
   technologies: Array.isArray(project.technologies)
     ? project.technologies
     : String(project.technologies || '')
-        .split(',')
-        .map((item) => item.trim())
-        .filter(Boolean),
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean),
   createdAt: project.createdAt || new Date().toISOString(),
   completionDate: project.completionDate || new Date().toISOString().slice(0, 10)
 });
@@ -76,9 +76,9 @@ const normalizeService = (service, fallbackId = null) => ({
   features: Array.isArray(service.features)
     ? service.features
     : String(service.features || '')
-        .split(',')
-        .map((item) => item.trim())
-        .filter(Boolean),
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean),
   fiverrLink: service.fiverrLink || 'https://www.fiverr.com/s/387W8VL'
 });
 
@@ -166,8 +166,22 @@ const saveCollectionLocal = (collection, items) => {
 };
 
 const loadCollectionRemote = async (collection) => {
-  const remote = await apiFetch(`/collections/${collection}`);
-  const remoteList = Array.isArray(remote?.items) ? remote.items : [];
+  let remoteList = [];
+  try {
+    const remote = await apiFetch(`/collections/${collection}`);
+    remoteList = Array.isArray(remote?.items) ? remote.items : [];
+  } catch (err) {
+    // If remote API is unavailable (static host or 404), gracefully fall back to local cache/seed
+    console.warn(`Remote API unavailable for collection ${collection}:`, err.message || err);
+    const cached = readCache(getCacheKey(collection), null);
+    if (cached) return cached;
+    const seed = getLocalSeed(collection);
+    const normalizer = getNormalizer(collection);
+    const seeded = seed.map((item, index) => normalizer(item, index + 1));
+    writeCache(getCacheKey(collection), seeded);
+    return seeded;
+  }
+
   const localList = readCache(getCacheKey(collection), []);
   const normalizer = getNormalizer(collection);
   const merged = mergeById(remoteList, localList, normalizer);
@@ -175,11 +189,16 @@ const loadCollectionRemote = async (collection) => {
   const seed = getLocalSeed(collection);
   const finalList = merged.length > 0 ? merged : seed.map((item, index) => normalizer(item, index + 1));
 
-  if (JSON.stringify(finalList) !== JSON.stringify(remoteList)) {
-    await apiFetch(`/collections/${collection}`, {
-      method: 'PUT',
-      body: JSON.stringify({ items: finalList })
-    });
+  try {
+    if (JSON.stringify(finalList) !== JSON.stringify(remoteList)) {
+      await apiFetch(`/collections/${collection}`, {
+        method: 'PUT',
+        body: JSON.stringify({ items: finalList })
+      });
+    }
+  } catch (err) {
+    // If saving back to remote fails, ignore and keep local cache
+    console.warn(`Failed to sync collection ${collection} to remote:`, err.message || err);
   }
 
   writeCache(getCacheKey(collection), finalList);

@@ -1,5 +1,19 @@
 services:
   - type: web
+    name: portfolio-umar
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
+    envVars:
+      - key: PORT
+        value: "10000"
+    healthCheckPath: "/api/health"
+    autoDeploy: true
+    pullRequestPreviewsEnabled: false
+services:
+  - type: web
     runtime: node
     name: mohammad-umar-portfolio
     branch: master
