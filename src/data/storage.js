@@ -100,13 +100,6 @@ const normalizeMessage = (msg, fallbackId = null) => ({
   status: msg.status || 'New'
 });
 
-const mergeById = (remoteList, localList, normalizer) => {
-  const merged = new Map();
-  remoteList.map(normalizer).forEach((item) => merged.set(Number(item.id), item));
-  localList.map(normalizer).forEach((item) => merged.set(Number(item.id), item));
-  return Array.from(merged.values()).sort((a, b) => Number(a.id) - Number(b.id));
-};
-
 const getLocalSeed = (collection) => {
   switch (collection) {
     case 'projects':
@@ -181,12 +174,12 @@ const loadCollectionRemote = async (collection) => {
     return seeded;
   }
 
-  const localList = readCache(getCacheKey(collection), []);
   const normalizer = getNormalizer(collection);
-  const merged = mergeById(remoteList, localList, normalizer);
-
   const seed = getLocalSeed(collection);
-  const finalList = merged.length > 0 ? merged : seed.map((item, index) => normalizer(item, index + 1));
+  const finalList =
+    remoteList.length > 0
+      ? remoteList.map((item, index) => normalizer(item, index + 1))
+      : seed.map((item, index) => normalizer(item, index + 1));
 
   try {
     if (JSON.stringify(finalList) !== JSON.stringify(remoteList)) {
