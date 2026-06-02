@@ -24,6 +24,7 @@ const pool = useDatabase
   : null;
 
 const COLLECTIONS = new Set(['projects', 'messages', 'services', 'education', 'leads']);
+let databaseReady = false;
 
 const getSeedForCollection = (collection) => {
   switch (collection) {
@@ -61,6 +62,26 @@ const ensureDatabase = async () => {
       );
     }
   }
+
+  databaseReady = true;
+};
+
+const scheduleDatabaseInit = () => {
+  if (!pool) return;
+
+  ensureDatabase().catch((error) => {
+    databaseReady = false;
+    console.error('Database initialization failed; retrying soon.', error);
+    setTimeout(scheduleDatabaseInit, 5000);
+  });
+};
+
+const waitForDatabase = async () => {
+  if (!pool) return false;
+  if (!databaseReady) {
+    await ensureDatabase();
+  }
+  return databaseReady;
 };
 
 const normalizeItems = (items) => (Array.isArray(items) ? items : []);
@@ -70,14 +91,14 @@ app.use(express.json({ limit: '2mb' }));
 app.get('/api/health', async (_req, res) => {
   res.json({
     ok: true,
-    database: Boolean(pool)
+    database: databaseReady
   });
 });
 
 // Simple status endpoint to help debugging deploys
 app.get('/api/status', async (_req, res) => {
   try {
-    const dbOk = Boolean(pool);
+    const dbOk = databaseReady;
     let dbInfo = null;
     if (pool) {
       const result = await pool.query("SELECT to_char(max(updated_at), 'YYYY-MM-DD HH24:MI:SS') as last_update FROM portfolio_state");
@@ -96,7 +117,7 @@ app.get('/api/collections/:collection', async (req, res) => {
     return res.status(404).json({ error: 'Unknown collection' });
   }
 
-  if (!pool) {
+  if (!pool || !(await waitForDatabase())) {
     return res.json({ items: getSeedForCollection(collection) });
   }
 
@@ -114,7 +135,7 @@ app.put('/api/collections/:collection', async (req, res) => {
 
   const items = normalizeItems(req.body?.items);
 
-  if (!pool) {
+  if (!pool || !(await waitForDatabase())) {
     return res.json({ items });
   }
 
@@ -143,13 +164,7 @@ app.use((_req, res) => {
   }
 });
 
-ensureDatabase()
-  .then(() => {
-    app.listen(port, () => {
-      console.log(`Server listening on port ${port}`);
-    });
-  })
-  .catch((error) => {
-    console.error('Failed to initialize database', error);
-    process.exit(1);
-  });
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+  scheduleDatabaseInit();
+});
